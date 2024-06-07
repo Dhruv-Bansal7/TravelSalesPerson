@@ -1,0 +1,76 @@
+.App {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.grid {
+  display: grid;
+  grid-template-rows: repeat(20, 20px);
+  grid-template-columns: repeat(20, 20px);
+  gap: 2px;
+  margin: 20px auto;
+  position: relative;
+  border: 5px solid black;
+}
+
+.row {
+  display: contents;
+}
+
+.cell {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.city {
+  background-color: red;
+}
+
+.visited {
+  background-color: green;
+}
+
+.path {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+} 
+
+
+
+button {
+  margin: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 15px;
+  background-color: antiquewhite;
+  border: none;
+}
+
+button:hover{
+  background-color: bisque;
+  transform: scale(1.05);
+}
+body {
+  background-color: #242424;
+}
+
+h1 {
+  color: white;
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+@media screen and (max-width : 450px){
+  h1 {
+    font-size: 2.0em;
+  }
+}

@@ -4,32 +4,20 @@ import './App.css';
 const gridSize = 20; // Grid Size if change it here also change in css file
 
 
-// Cites and there coordinates
-const cities = [
-    { id: 0, x: 1, y: 1 },
-    { id: 1, x: 5, y: 5 },
-    { id: 2, x: 2, y: 4 },
-    { id: 3, x: 14, y: 8 },
-    { id: 4, x: 12, y: 7 },
-    { id: 5, x: 18, y: 9 },
-    { id: 6, x: 4, y: 11 },
-    { id: 7, x: 8, y: 6},
-    { id: 8, x: 12, y: 13 },
-    { id: 9, x: 3, y: 2 },
-    { id: 10, x: 5, y: 9 },
-    { id: 11, x: 12, y: 13 },
-    { id: 12, x: 11, y: 18},
-    { id: 13, x: 2, y: 19 },
-    { id: 14, x: 17, y: 2 },
-  ];
 
 //main Function
 
 function App () {
-
-
+  // Cites and there coordinates
+  const [cities, setCities] = useState([
+    { id: 0, x: 1, y: 1 },
+    { id: 1, x: 3, y: 5 },
+    { id: 2, x: 7, y: 3 },
+    { id: 3, x: 10, y: 8 },
+    { id: 4, x: 13, y: 2 },
+  ]);
   const[tour,setTour] = useState([0]); // Tour array the store the tour of cities
-  const [visited,setVisited] = useState([true]); // visited array that store the bool value that city is visited or not
+  const [visited,setVisited] = useState([]); // visited array that store the bool value that city is visited or not
   const[currentCity,setCurrentCity] = useState(0); // store current city
   const [isAnimating,setIsAnimating] = useState(false); // for button
 
@@ -71,7 +59,7 @@ function App () {
     }
     return () => clearInterval(interval);
   
-  }, [currentCity , tour, visited, isAnimating] );
+  }, [currentCity , tour, visited, isAnimating,cities] );
 
   const findNearestNeighour = (currentCity,visited,cities) => { // this function find the nearest Neighour of the current city
     let minDistance = Infinity;
@@ -95,9 +83,27 @@ function App () {
 
   const startAnimation = () => { // when button isclixk set default condition
     setTour([0]);
-    setVisited([true]);
+    setVisited(new Array(cities.length).fill(false));
+    setVisited([true,...new Array(cities.length-1).fill(false)]);
     setCurrentCity(0);
     setIsAnimating(true);
+  };
+
+  const handleCityChange = (id,x,y) => {
+    setCities((prev) => 
+      prev.map((city)=> (city.id === id ? { ...city, x : x, y : y} : city))
+    );
+  };
+
+  const addCity = () => {
+    setCities((prev) => [
+      ...prev,
+      { id : prev.length, x : Math.floor(Math.random() * gridSize) , y : Math.floor(Math.random() * gridSize)},
+    ]);
+  };
+
+  const removeCity = (id) => {
+    setCities((prev) => prev.slice(0,-1));
   };
 
   return (
@@ -105,7 +111,40 @@ function App () {
 
       <h1>Travelling SalesPerson Problem - Nearest Neighour</h1>
 
-      <button onClick={startAnimation} disabled= {isAnimating}>Start Animation</button>
+      <div>
+        <button onClick={startAnimation} disabled= {isAnimating}>
+          Start Animation
+        </button>
+        <button onClick={addCity} disabled={isAnimating}> 
+          Add City 
+        </button>
+        <button onClick={removeCity} disabled={isAnimating || cities.length <= 1}> 
+          Remove City
+        </button>
+      </div>
+
+      
+
+      <div className='city-inputs'>
+        {cities.map((city) => (
+          <div key={city.id} className='city-input'>
+            <label>City {city.id + 1} : </label>
+            <input 
+            type="number" 
+            value={city.x} 
+            onChange={(e) => handleCityChange(city.id,parseInt(e.target.value), city.y)} 
+            disabled={isAnimating} 
+            />
+            <input
+              type="number"
+              value={city.y}
+              onChange={(e) => handleCityChange(city.id, city.x, parseInt(e.target.value))}
+              disabled={isAnimating}
+            />
+
+          </div>
+        ))}
+      </div>
 
       <div className='grid'>
          {/* Creation of grid */}
@@ -158,3 +197,4 @@ function App () {
 }
 
 export default App;
+

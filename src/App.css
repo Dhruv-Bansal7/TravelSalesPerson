@@ -73,4 +73,49 @@ h1 {
   h1 {
     font-size: 2.0em;
   }
+  .App{
+    width: 143%;
+  }
+  .city-inputs{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100% !important;
+    justify-content: space-around;
+  }
+  button {
+    margin: 5px;
+    margin-bottom: 20px;
+  }
+}
+
+
+.city-inputs {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 60%;
+  justify-content: space-around;
+}
+
+.city-input {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.city-input label {
+  margin-right: 15px;
+  color: white;
+}
+
+.city-input input {
+  border: 1px solid grey;
+  border-radius: 5px;
+  width: 50px;
+  margin-right: 10px;
+
+  background-color: #d1cece;
 }
